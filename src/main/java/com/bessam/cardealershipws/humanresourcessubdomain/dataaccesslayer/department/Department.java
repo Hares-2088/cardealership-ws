@@ -18,15 +18,15 @@ public class Department {
     private DepartmentIdentifier departmentIdentifier;
 
     private String name;
-     private Integer headCount;
+    private Integer headCount;
 
-     @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "department_positions", joinColumns = @JoinColumn(name = "department_id"))
     private List<Position> positions;
 
-     public Department(){
+    public Department(){
 
-     }
+    }
 
     public Department(String name, Integer headCount, List<Position> positions) {
         this.departmentIdentifier = new DepartmentIdentifier();

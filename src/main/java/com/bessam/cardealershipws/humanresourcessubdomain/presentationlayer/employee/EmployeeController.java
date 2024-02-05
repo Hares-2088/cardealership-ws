@@ -24,23 +24,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeIdentifier}")
-    public ResponseEntity<EmployeeResponseDTO> getContactById(@PathVariable EmployeeIdentifier employeeIdentifier){
+    public ResponseEntity<EmployeeResponseDTO> getEmployeeById(@PathVariable EmployeeIdentifier employeeIdentifier){
         return ResponseEntity.status(HttpStatus.FOUND).body(employeeService.getEmployeeById(employeeIdentifier));
     }
 
     @PostMapping()
-    public ResponseEntity<EmployeeResponseDTO> createContact(@RequestBody EmployeeRequestDTO contactRequestDTO){
+    public ResponseEntity<EmployeeResponseDTO> createEmployee(@RequestBody EmployeeRequestDTO contactRequestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.AddEmployee(contactRequestDTO));
     }
 
     @PutMapping("/{employeeIdentifier}")
-    public ResponseEntity<EmployeeResponseDTO> updateContact(@RequestBody EmployeeRequestDTO employeeRequestDTO,
+    public ResponseEntity<EmployeeResponseDTO> updateEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO,
                                                             @PathVariable EmployeeIdentifier employeeIdentifier){
         return ResponseEntity.status(HttpStatus.OK).body(employeeService.UpdateEmployee(employeeRequestDTO, employeeIdentifier));
     }
 
     @DeleteMapping("/{employeeIdentifier}")
-    public ResponseEntity<EmployeeResponseDTO> deleteContact(@PathVariable EmployeeIdentifier employeeIdentifier){
+    public ResponseEntity<EmployeeResponseDTO> deleteEmployee(@PathVariable EmployeeIdentifier employeeIdentifier){
         employeeService.deleteEmployee(employeeIdentifier);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
