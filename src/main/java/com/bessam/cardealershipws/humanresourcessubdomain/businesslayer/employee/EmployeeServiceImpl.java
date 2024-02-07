@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -32,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         for(Employee employee: employeeList){
             EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
             BeanUtils.copyProperties(employee, employeeResponseDTO);
+            employeeResponseDTO.setEmployeeId(employee.getEmployeeIdentifier().getEmployeeId());
 
             employeeResponseDTOList.add(employeeResponseDTO);
         }
@@ -39,19 +39,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponseDTO getEmployeeById(EmployeeIdentifier employeeIdentifier) {
+    public EmployeeResponseDTO getEmployeeByEmployeeId(String employeeId) {
 
-        Employee employee = employeeRepository.findEmployeeByEmployeeIdentifier(employeeIdentifier);
+        Employee employee = employeeRepository.findEmployeeByEmployeeIdentifier_EmployeeId(employeeId);
         EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
 
         BeanUtils.copyProperties(employee, employeeResponseDTO);
+        employeeResponseDTO.setEmployeeId(employee.getEmployeeIdentifier().getEmployeeId());
         return employeeResponseDTO;
     }
 
     @Override
-    public EmployeeResponseDTO UpdateEmployee(EmployeeRequestDTO employeeRequestDTO, EmployeeIdentifier employeeIdentifier) {
+    public EmployeeResponseDTO UpdateEmployee(EmployeeRequestDTO employeeRequestDTO, String employeeId) {
 
-        Employee foundEmployee = employeeRepository.findEmployeeByEmployeeIdentifier(employeeIdentifier);
+        Employee foundEmployee = employeeRepository.findEmployeeByEmployeeIdentifier_EmployeeId(employeeId);
 
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeRequestDTO, employee);
@@ -64,6 +65,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
         BeanUtils.copyProperties(savedEmployee, employeeResponseDTO);
         return employeeResponseDTO;
+
+        //Ask for the id and identifier
     }
 
     @Override
@@ -76,14 +79,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
        Employee savedEmployee = employeeRepository.save(employee);
        EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
+       employeeResponseDTO.setEmployeeId(savedEmployee.getEmployeeIdentifier().getEmployeeId());
 
        BeanUtils.copyProperties(savedEmployee, employeeResponseDTO);
         return employeeResponseDTO;
     }
 
     @Override
-    public void deleteEmployee(EmployeeIdentifier employeeIdentifier) {
-        Employee foundEmployee = employeeRepository.findEmployeeByEmployeeIdentifier(employeeIdentifier);
+    public void deleteEmployee(String employeeId) {
+        Employee foundEmployee = employeeRepository.findEmployeeByEmployeeIdentifier_EmployeeId(employeeId);
 
         employeeRepository.delete(foundEmployee);
     }

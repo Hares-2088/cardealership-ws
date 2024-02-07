@@ -1,7 +1,6 @@
 package com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.department;
 
 import com.bessam.cardealershipws.humanresourcessubdomain.businesslayer.department.DepartmentService;
-import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.department.DepartmentIdentifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,25 +22,25 @@ public class DepartmentController {
         return ResponseEntity.status(HttpStatus.FOUND).body(departmentService.getDepartments());
     }
 
-    @GetMapping("/{departmentIdentifier}")
-    public ResponseEntity<DepartmentResponseDTO> getDepartmentById(@PathVariable DepartmentIdentifier departmentIdentifier){
-        return ResponseEntity.status(HttpStatus.FOUND).body(departmentService.getDepartmentById(departmentIdentifier));
+    @GetMapping("{departmentId}")
+    public ResponseEntity<DepartmentResponseDTO> getDepartmentByDepartmentId(@PathVariable String departmentId){
+        return ResponseEntity.status(HttpStatus.FOUND).body(departmentService.getDepartmentByDepartmentId(departmentId));
     }
 
     @PostMapping()
-    public ResponseEntity<DepartmentResponseDTO> createDepartment(@RequestBody DepartmentRequestDTO departmentRequestDTO){
+    public ResponseEntity<DepartmentResponseDTO> addDepartment(@RequestBody DepartmentRequestDTO departmentRequestDTO){
         return ResponseEntity.status(HttpStatus.CREATED).body(departmentService.addDepartment(departmentRequestDTO));
     }
 
-    @PutMapping("/{departmentIdentifier}")
+    @PutMapping("/{departmentId}")
     public ResponseEntity<DepartmentResponseDTO> updateDepartment(@RequestBody DepartmentRequestDTO departmentRequestDTO,
-                                                             @PathVariable DepartmentIdentifier departmentIdentifier){
-        return ResponseEntity.status(HttpStatus.OK).body(departmentService.updateDepartment(departmentIdentifier, departmentRequestDTO));
+                                                             @PathVariable String departmentId){
+        return ResponseEntity.status(HttpStatus.OK).body(departmentService.updateDepartment(departmentId, departmentRequestDTO));
     }
 
-    @DeleteMapping("/{departmentIdentifier}")
-    public ResponseEntity<DepartmentResponseDTO> deleteDepartment(@PathVariable DepartmentIdentifier departmentIdentifier){
-        departmentService.deleteDepartment(departmentIdentifier);
+    @DeleteMapping("/{departmentId}")
+    public ResponseEntity<DepartmentResponseDTO> deleteDepartment(@PathVariable String departmentId){
+        departmentService.deleteDepartment(departmentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }

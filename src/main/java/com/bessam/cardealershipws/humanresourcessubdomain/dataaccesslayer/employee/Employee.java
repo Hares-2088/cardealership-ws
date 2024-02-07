@@ -30,7 +30,7 @@ public class Employee {
 
     private String firstName;
     private String lastName;
-    private String email;
+    private String emailAddress;
     private Double salary;
     private Double commissionRate;
 
@@ -40,7 +40,7 @@ public class Employee {
         this.phoneNumbers = phoneNumbers;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.emailAddress = email;
         this.salary = salary;
         this.commissionRate = commissionRate;
     }

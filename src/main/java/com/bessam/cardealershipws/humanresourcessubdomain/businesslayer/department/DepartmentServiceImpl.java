@@ -3,22 +3,24 @@ package com.bessam.cardealershipws.humanresourcessubdomain.businesslayer.departm
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.department.Department;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.department.DepartmentIdentifier;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.department.DepartmentRepository;
-import com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.department.DepartmentController;
+import com.bessam.cardealershipws.humanresourcessubdomain.mapperlayer.department.DepartmentRequestMapper;
+import com.bessam.cardealershipws.humanresourcessubdomain.mapperlayer.department.DepartmentResponseMapper;
 import com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.department.DepartmentRequestDTO;
 import com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.department.DepartmentResponseDTO;
-import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 @Service
 public class DepartmentServiceImpl implements DepartmentService{
 
-    public DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
+    private final DepartmentResponseMapper departmentResponseMapper;
+    private final DepartmentRequestMapper departmentRequestMapper;
 
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository) {
+    public DepartmentServiceImpl(DepartmentRepository departmentRepository, DepartmentResponseMapper departmentResponseMapper, DepartmentRequestMapper departmentRequestMapper) {
         this.departmentRepository = departmentRepository;
+        this.departmentResponseMapper = departmentResponseMapper;
+        this.departmentRequestMapper = departmentRequestMapper;
     }
 
     @Override
@@ -26,65 +28,44 @@ public class DepartmentServiceImpl implements DepartmentService{
 
         List<Department> departmentList = departmentRepository.findAll();
 
-        List<DepartmentResponseDTO> departmentResponseDTOList = new ArrayList<>();
-
-        for(Department department : departmentList){
-            DepartmentResponseDTO departmentResponseDTO = new DepartmentResponseDTO();
-            BeanUtils.copyProperties(department, departmentResponseDTO);
-
-            departmentResponseDTOList.add(departmentResponseDTO);
-        }
-
-        return departmentResponseDTOList;
+        return departmentResponseMapper.entityListToResponseDTOList(departmentList);
     }
 
     @Override
-    public DepartmentResponseDTO getDepartmentById(DepartmentIdentifier departmentIdentifier) {
+    public DepartmentResponseDTO getDepartmentByDepartmentId(String departmentId) {
 
-        Department department = departmentRepository.findDepartmentByDepartmentIdentifier(departmentIdentifier);
+        Department foundDepartment = departmentRepository.findDepartmentByDepartmentIdentifier_DepartmentId(departmentId);
 
-        DepartmentResponseDTO departmentResponseDTO = new DepartmentResponseDTO();
-        BeanUtils.copyProperties(department, departmentResponseDTO);
+//        if(department === null){
+//
+//        }
 
-        return departmentResponseDTO;
+        return departmentResponseMapper.entityToResponseDTO(foundDepartment);
     }
 
     @Override
-    public DepartmentResponseDTO updateDepartment(DepartmentIdentifier departmentIdentifier, DepartmentRequestDTO departmentRequestDTO) {
+    public DepartmentResponseDTO updateDepartment(String departmentId, DepartmentRequestDTO departmentRequestDTO) {
 
-        Department foundDepartment = departmentRepository.findDepartmentByDepartmentIdentifier(departmentIdentifier);
+        Department foundDepartment = departmentRepository.findDepartmentByDepartmentIdentifier_DepartmentId(departmentId);
 
-        Department department = new Department();
-        BeanUtils.copyProperties(foundDepartment, department);
-
+        Department department = departmentRequestMapper.requestDTOToEntity(departmentRequestDTO, foundDepartment.getDepartmentIdentifier());
         department.setId(foundDepartment.getId());
-        department.setDepartmentIdentifier(foundDepartment.getDepartmentIdentifier());
 
-        DepartmentResponseDTO departmentResponseDTO = new DepartmentResponseDTO();
-        BeanUtils.copyProperties(department, departmentResponseDTO);
 
-        return departmentResponseDTO;
+        return departmentResponseMapper.entityToResponseDTO(departmentRepository.save(department));
     }
 
     @Override
     public DepartmentResponseDTO addDepartment(DepartmentRequestDTO departmentRequestDTO) {
 
-        Department department = new Department();
-        BeanUtils.copyProperties(departmentRequestDTO, department);
+        Department department = departmentRequestMapper.requestDTOToEntity(departmentRequestDTO, new DepartmentIdentifier());
 
-        department.setDepartmentIdentifier(new DepartmentIdentifier());
-
-        Department savedDepartment = departmentRepository.save(department);
-
-        DepartmentResponseDTO departmentResponseDTO = new DepartmentResponseDTO();
-        BeanUtils.copyProperties(savedDepartment, departmentResponseDTO);
-
-        return departmentResponseDTO;
+        return departmentResponseMapper.entityToResponseDTO(departmentRepository.save(department));
     }
 
     @Override
-    public void deleteDepartment(DepartmentIdentifier departmentIdentifier) {
-        Department foundDepartment = departmentRepository.findDepartmentByDepartmentIdentifier(departmentIdentifier);
+    public void deleteDepartment(String departmentId) {
+        Department foundDepartment = departmentRepository.findDepartmentByDepartmentIdentifier_DepartmentId(departmentId);
 
         departmentRepository.delete(foundDepartment);
     }

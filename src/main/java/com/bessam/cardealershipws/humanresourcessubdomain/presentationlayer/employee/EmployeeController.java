@@ -23,9 +23,9 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.FOUND).body(employeeService.getEmployees());
     }
 
-    @GetMapping("/{employeeIdentifier}")
-    public ResponseEntity<EmployeeResponseDTO> getEmployeeById(@PathVariable EmployeeIdentifier employeeIdentifier){
-        return ResponseEntity.status(HttpStatus.FOUND).body(employeeService.getEmployeeById(employeeIdentifier));
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<EmployeeResponseDTO> getEmployeeByEmployeeId(@PathVariable String employeeId){
+        return ResponseEntity.status(HttpStatus.FOUND).body(employeeService.getEmployeeByEmployeeId(employeeId));
     }
 
     @PostMapping()
@@ -33,15 +33,15 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.AddEmployee(contactRequestDTO));
     }
 
-    @PutMapping("/{employeeIdentifier}")
+    @PutMapping("/{employeeId}")
     public ResponseEntity<EmployeeResponseDTO> updateEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO,
-                                                            @PathVariable EmployeeIdentifier employeeIdentifier){
-        return ResponseEntity.status(HttpStatus.OK).body(employeeService.UpdateEmployee(employeeRequestDTO, employeeIdentifier));
+                                                            @PathVariable String employeeId){
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.UpdateEmployee(employeeRequestDTO, employeeId));
     }
 
-    @DeleteMapping("/{employeeIdentifier}")
-    public ResponseEntity<EmployeeResponseDTO> deleteEmployee(@PathVariable EmployeeIdentifier employeeIdentifier){
-        employeeService.deleteEmployee(employeeIdentifier);
+    @DeleteMapping("/{employeeId}")
+    public ResponseEntity<EmployeeResponseDTO> deleteEmployee(@PathVariable String employeeId){
+        employeeService.deleteEmployee(employeeId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 }
