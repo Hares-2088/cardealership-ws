@@ -36,10 +36,6 @@ public class DepartmentServiceImpl implements DepartmentService{
 
         Department foundDepartment = departmentRepository.findDepartmentByDepartmentIdentifier_DepartmentId(departmentId);
 
-//        if(department === null){
-//
-//        }
-
         return departmentResponseMapper.entityToResponseDTO(foundDepartment);
     }
 

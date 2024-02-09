@@ -1,7 +1,6 @@
 package com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.employee;
 
 import com.bessam.cardealershipws.humanresourcessubdomain.businesslayer.employee.EmployeeService;
-import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.EmployeeIdentifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +35,7 @@ public class EmployeeController {
     @PutMapping("/{employeeId}")
     public ResponseEntity<EmployeeResponseDTO> updateEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO,
                                                             @PathVariable String employeeId){
-        return ResponseEntity.status(HttpStatus.OK).body(employeeService.UpdateEmployee(employeeRequestDTO, employeeId));
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.updateEmployee(employeeRequestDTO, employeeId));
     }
 
     @DeleteMapping("/{employeeId}")

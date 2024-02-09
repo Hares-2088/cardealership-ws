@@ -3,11 +3,11 @@ package com.bessam.cardealershipws.humanresourcessubdomain.businesslayer.employe
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.Employee;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.EmployeeIdentifier;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.EmployeeRepository;
+import com.bessam.cardealershipws.humanresourcessubdomain.mapperlayer.employee.EmployeeRequestMapper;
+import com.bessam.cardealershipws.humanresourcessubdomain.mapperlayer.employee.EmployeeResponseMapper;
 import com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.employee.EmployeeRequestDTO;
 import com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.employee.EmployeeResponseDTO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +17,14 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
 
     public EmployeeRepository employeeRepository;
+    public EmployeeRequestMapper employeeRequestMapper;
+    public EmployeeResponseMapper employeeResponseMapper;
+
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeRequestMapper employeeRequestMapper, EmployeeResponseMapper employeeResponseMapper) {
+        this.employeeRepository = employeeRepository;
+        this.employeeRequestMapper = employeeRequestMapper;
+        this.employeeResponseMapper = employeeResponseMapper;
+    }
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
@@ -26,63 +34,34 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<EmployeeResponseDTO> getEmployees() {
         List<Employee> employeeList = employeeRepository.findAll();
-        List<EmployeeResponseDTO> employeeResponseDTOList = new ArrayList<>();
 
-        for(Employee employee: employeeList){
-            EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
-            BeanUtils.copyProperties(employee, employeeResponseDTO);
-            employeeResponseDTO.setEmployeeId(employee.getEmployeeIdentifier().getEmployeeId());
-
-            employeeResponseDTOList.add(employeeResponseDTO);
-        }
-        return employeeResponseDTOList;
+        return employeeResponseMapper.entityListToResponseDTOList(employeeList);
     }
 
     @Override
     public EmployeeResponseDTO getEmployeeByEmployeeId(String employeeId) {
 
         Employee employee = employeeRepository.findEmployeeByEmployeeIdentifier_EmployeeId(employeeId);
-        EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
 
-        BeanUtils.copyProperties(employee, employeeResponseDTO);
-        employeeResponseDTO.setEmployeeId(employee.getEmployeeIdentifier().getEmployeeId());
-        return employeeResponseDTO;
+        return employeeResponseMapper.entityToResponseDTO(employee);
     }
 
     @Override
-    public EmployeeResponseDTO UpdateEmployee(EmployeeRequestDTO employeeRequestDTO, String employeeId) {
+    public EmployeeResponseDTO updateEmployee(EmployeeRequestDTO employeeRequestDTO, String employeeId) {
 
         Employee foundEmployee = employeeRepository.findEmployeeByEmployeeIdentifier_EmployeeId(employeeId);
 
-        Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeRequestDTO, employee);
-
+        Employee employee = employeeRequestMapper.requestModelToEntity(employeeRequestDTO, foundEmployee.getEmployeeIdentifier());
         employee.setId(foundEmployee.getId());
-        employee.setEmployeeIdentifier(employee.getEmployeeIdentifier());
-
-        Employee savedEmployee = employeeRepository.save(employee);
-
-        EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
-        BeanUtils.copyProperties(savedEmployee, employeeResponseDTO);
-        return employeeResponseDTO;
-
-        //Ask for the id and identifier
+        return employeeResponseMapper.entityToResponseDTO(employeeRepository.save(employee));
     }
 
     @Override
     public EmployeeResponseDTO AddEmployee(EmployeeRequestDTO employeeRequestDTO) {
 
-       Employee employee = new Employee();
-       BeanUtils.copyProperties(employeeRequestDTO, employee);
+       Employee employee = employeeRequestMapper.requestModelToEntity(employeeRequestDTO, new EmployeeIdentifier());
 
-       employee.setEmployeeIdentifier( new EmployeeIdentifier());
-
-       Employee savedEmployee = employeeRepository.save(employee);
-       EmployeeResponseDTO employeeResponseDTO = new EmployeeResponseDTO();
-       employeeResponseDTO.setEmployeeId(savedEmployee.getEmployeeIdentifier().getEmployeeId());
-
-       BeanUtils.copyProperties(savedEmployee, employeeResponseDTO);
-        return employeeResponseDTO;
+        return employeeResponseMapper.entityToResponseDTO(employeeRepository.save(employee));
     }
 
     @Override
