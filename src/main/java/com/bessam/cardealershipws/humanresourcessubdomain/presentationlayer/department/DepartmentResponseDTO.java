@@ -1,6 +1,5 @@
 package com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.department;
 
-import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.department.DepartmentIdentifier;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.department.Position;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

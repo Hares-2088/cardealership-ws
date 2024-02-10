@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class DepartmentRequestDTO{
+
     private String name;
     private Integer headCount;
     private List<Position> positions;
