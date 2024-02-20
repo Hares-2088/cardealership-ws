@@ -1,5 +1,6 @@
-package com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle;
+package com.bessam.cardealershipws.common;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
@@ -13,5 +14,9 @@ public class VehicleIdentifier {
 
     public VehicleIdentifier() {
         this.vehicleId = UUID.randomUUID().toString();
+    }
+
+    public VehicleIdentifier(String vehicleId) {
+        this.vehicleId = vehicleId;
     }
 }

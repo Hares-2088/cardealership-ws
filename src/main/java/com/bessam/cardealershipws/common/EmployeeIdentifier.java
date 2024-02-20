@@ -1,4 +1,4 @@
-package com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee;
+package com.bessam.cardealershipws.common;
 
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
@@ -10,5 +10,9 @@ public class EmployeeIdentifier {
     private String employeeId;
     public EmployeeIdentifier(){
         this.employeeId = UUID.randomUUID().toString();
+    }
+
+    public EmployeeIdentifier(String employeeId) {
+        this.employeeId = employeeId;
     }
 }

@@ -3,12 +3,13 @@ package com.bessam.cardealershipws.inventorymanagementsubdomain.businesslayer.in
 
 import com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.inventory.InventoryRequestModel;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.inventory.InventoryResponseModel;
+import com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.inventory.InventoryVehicleResponseModel;
 
 import java.util.List;
 
 public interface InventoryService {
     List<InventoryResponseModel> getInventories();
-    InventoryResponseModel getInventoryByInventoryId(String inventoryId);
+    InventoryVehicleResponseModel getInventoryByInventoryId(String inventoryId);
     InventoryResponseModel updateInventory(String inventoryId, InventoryRequestModel inventoryRequestModel);
     InventoryResponseModel addInventory(InventoryRequestModel inventoryRequestModel);
     void deleteInventory(String inventoryId);

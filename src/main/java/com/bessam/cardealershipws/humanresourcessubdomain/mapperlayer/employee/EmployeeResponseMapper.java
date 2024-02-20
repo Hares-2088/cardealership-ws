@@ -8,9 +8,9 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-
 public interface EmployeeResponseMapper {
-    @Mapping(expression = "java(employee.getEmployeeIdentifier().getId()", target = "employeeId")
+
+    @Mapping(expression = "java(employee.getEmployeeIdentifier().getEmployeeId())", target = "employeeId")
     EmployeeResponseDTO entityToResponseDTO(Employee employee);
 
     List<EmployeeResponseDTO> entityListToResponseDTOList(List<Employee> employeeList);

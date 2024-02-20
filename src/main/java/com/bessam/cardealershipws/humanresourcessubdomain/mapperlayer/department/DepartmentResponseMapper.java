@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface DepartmentResponseMapper {
 
-    @Mapping(expression = "java(department.getDepartmentIdentifier().getDepartmentId()", target = "departmentId")
+    @Mapping(expression = "java(department.getDepartmentIdentifier().getDepartmentId())", target = "departmentId")
     DepartmentResponseDTO entityToResponseDTO(Department department);
 
     List<DepartmentResponseDTO> entityListToResponseDTOList(List<Department> departmentList);

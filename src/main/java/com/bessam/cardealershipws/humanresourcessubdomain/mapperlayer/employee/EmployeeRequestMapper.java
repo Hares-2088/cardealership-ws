@@ -1,7 +1,7 @@
 package com.bessam.cardealershipws.humanresourcessubdomain.mapperlayer.employee;
 
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.Employee;
-import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.EmployeeIdentifier;
+import com.bessam.cardealershipws.common.EmployeeIdentifier;
 import com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.employee.EmployeeRequestDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

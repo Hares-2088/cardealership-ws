@@ -1,19 +1,25 @@
 package com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
-import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Embeddable
+@Getter
 @NoArgsConstructor
 public class Options {
+    @Column(name = "name")
     private String name;
-    private String description;
-    @Embedded
-    private Price price;
 
-    public Options(@NotNull String name, @NotNull String description,@NotNull Price price) {
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "price")
+    private Double price;
+
+    public Options(String name, String description, Double price) {
         this.name = name;
         this.description = description;
         this.price = price;

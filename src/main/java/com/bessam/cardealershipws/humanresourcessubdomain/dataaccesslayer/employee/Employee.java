@@ -1,5 +1,6 @@
 package com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee;
 
+import com.bessam.cardealershipws.common.EmployeeIdentifier;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -21,6 +22,9 @@ public class Employee {
     @Embedded
     private EmployeeIdentifier employeeIdentifier;
 
+//    @Embedded
+//    private DepartmentIdentifier departmentIdentifier;
+
     @Embedded
     private Address address;
 
@@ -28,10 +32,19 @@ public class Employee {
     @CollectionTable(name = "employee_phonenumbers", joinColumns = @JoinColumn(name = "employee_id"))
     private List<PhoneNumber> phoneNumbers;
 
+    @Column(name="first_name")
     private String firstName;
+
+    @Column(name="last_name")
     private String lastName;
+
+    @Column(name=" email_address")
     private String emailAddress;
+
+    @Column(name="salary")
     private Double salary;
+
+    @Column(name="commissionRate")
     private Double commissionRate;
 
     public Employee(@NotNull EmployeeIdentifier employeeIdentifier, @NotNull Address address, @NotNull List<PhoneNumber> phoneNumbers, @NotNull String firstName, @NotNull String lastName, @NotNull String email, @NotNull Double salary, @NotNull Double commissionRate) {

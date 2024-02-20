@@ -1,13 +1,17 @@
 package com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle;
 
+import com.bessam.cardealershipws.common.Currency;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor
+@Getter
 public class Price {
     @Enumerated(EnumType.STRING)
     private Currency currency;

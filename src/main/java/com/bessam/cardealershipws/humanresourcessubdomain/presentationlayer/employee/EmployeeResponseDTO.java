@@ -1,7 +1,6 @@
 package com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.employee;
 
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.Address;
-import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.EmployeeIdentifier;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.PhoneNumber;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

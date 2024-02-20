@@ -1,4 +1,4 @@
-package com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.inventory;
+package com.bessam.cardealershipws.common;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import jakarta.persistence.Embeddable;
@@ -14,5 +14,9 @@ public class InventoryIdentifier {
 
     public InventoryIdentifier() {
         this.inventoryId = UUID.randomUUID().toString();
+    }
+
+    public InventoryIdentifier(String inventoryId) {
+        this.inventoryId = inventoryId;
     }
 }
