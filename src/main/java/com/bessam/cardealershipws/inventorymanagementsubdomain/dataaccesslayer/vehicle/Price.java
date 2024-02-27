@@ -1,7 +1,6 @@
 package com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle;
 
 import com.bessam.cardealershipws.common.Currency;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

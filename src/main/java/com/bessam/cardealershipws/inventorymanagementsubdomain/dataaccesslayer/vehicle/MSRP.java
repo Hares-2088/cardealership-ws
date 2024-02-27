@@ -3,12 +3,8 @@ package com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.
 import com.bessam.cardealershipws.common.Currency;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.text.DecimalFormat;
 
 @Embeddable
 @Getter

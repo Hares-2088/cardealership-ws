@@ -4,12 +4,21 @@ import com.bessam.cardealershipws.customerrelationssubdomain.datalayer.Customer;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.Employee;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.inventory.Inventory;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.Vehicle;
+import com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.inventory.InventoryController;
+import com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.vehicle.VehicleController;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Sale;
+import com.bessam.cardealershipws.salesandmarketingsubdomain.presentation.CustomerPurchaseController;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.presentation.SaleResponseModel;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.springframework.hateoas.Link;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Mapper(componentModel = "Spring")
 public interface SaleResponseMapper {
@@ -29,5 +38,24 @@ public interface SaleResponseMapper {
     @Mapping(expression = "java(customer.getLastName())", target = "customerLastName")
     SaleResponseModel entityToResponseModel(Sale sale, Customer customer, Employee employee, Vehicle vehicle);
 
-    List<SaleResponseModel> entityListToResponseModelList(List<Sale> sales);
+    @AfterMapping
+    default void addLinks(@MappingTarget SaleResponseModel model, Sale sale, Customer customer, Employee employee, Vehicle vehicle) {
+        Link selfLink = linkTo(methodOn(CustomerPurchaseController.class).
+                getCustomerPurchaseBySaleId(model.getCustomerId(), model.getSaleId())).withSelfRel();
+        model.add(selfLink);
+
+    //all purchases for customer
+    Link purchasesLink =
+            linkTo(methodOn(CustomerPurchaseController.class).
+                    getAllPurchases(model.getCustomerId())).withRel
+                    ("all purchases");
+    model.add(purchasesLink);
+
+    //vehicle link
+    Link vehicleLink =
+            linkTo(methodOn(VehicleController.class).
+                    getVehicleById(vehicle.getInventoryIdentifier().getInventoryId(), model.getVehicleId())).
+                    withRel("vehicle");
+    model.add(vehicleLink);
+    }
 }

@@ -13,6 +13,7 @@ import lombok.Setter;
 @Getter
 public class Inventory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Embedded

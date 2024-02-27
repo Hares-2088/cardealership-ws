@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface SaleService {
 
-    List<SaleResponseModel> getAllPurchases(String customerId, String saleId);
+    List<SaleResponseModel> getAllPurchases(String customerId);
     SaleResponseModel getCustomerPurchaseBySaleId(String customerId, String saleId);
-    SaleResponseModel addSale(SaleRequestModel saleRequestModel);
+    SaleResponseModel addCustomerPurchase(String customerId, SaleRequestModel saleRequestModel);
     void deleteSale(String saleId, String inventoryId, String vehicleId, String customerId,String employeeId);
     SaleResponseModel updateSale(SaleRequestModel saleRequestModel, String saleId);
 }

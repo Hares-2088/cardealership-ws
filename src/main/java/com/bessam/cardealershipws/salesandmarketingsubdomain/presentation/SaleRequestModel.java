@@ -1,5 +1,6 @@
 package com.bessam.cardealershipws.salesandmarketingsubdomain.presentation;
 
+import com.bessam.cardealershipws.common.Currency;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.FinancingAgreementDetails;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.SaleStatus;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Warranty;
@@ -17,16 +18,10 @@ public class SaleRequestModel {
 
     private String inventoryId;
     private String vehicleId;
-    private String vehicleMake;
-    private String vehicleModel;
-    private String customerId;
-    private String customerFirstName;
-    private String customerLastName;
     private String employeeId;
-    private String employeeFirstName;
-    private String employeeLastName;
-    private BigDecimal currency;
+    private BigDecimal salePrice;
     private SaleStatus saleStatus;
+    private Currency currency;
     private LocalDate saleOfferDate;
     private FinancingAgreementDetails financingAgreementDetails;
     private Warranty warranty;

@@ -4,10 +4,7 @@ import com.bessam.cardealershipws.salesandmarketingsubdomain.business.SaleServic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,10 +19,18 @@ public class CustomerPurchaseController {
         this.saleService = saleService;
     }
 
-    @GetMapping("{saleId}")
+
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<List<SaleResponseModel>> getAllPurchases(@PathVariable String customerId) {
+        return ResponseEntity.ok().body(saleService.getAllPurchases(customerId));
+    }
+    @GetMapping(value = "{saleId}", produces = "application/json")
     public ResponseEntity<SaleResponseModel> getCustomerPurchaseBySaleId(@PathVariable String customerId, @PathVariable String saleId) {
         return ResponseEntity.ok().body(saleService.getCustomerPurchaseBySaleId(customerId, saleId));
     }
 
-
+    @PostMapping(produces = "application/json", consumes = "application/json")
+    public ResponseEntity<SaleResponseModel> createCustomerPurchase(@PathVariable String customerId, @RequestBody SaleRequestModel saleRequestModel) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(saleService.addCustomerPurchase(customerId, saleRequestModel));
+    }
 }

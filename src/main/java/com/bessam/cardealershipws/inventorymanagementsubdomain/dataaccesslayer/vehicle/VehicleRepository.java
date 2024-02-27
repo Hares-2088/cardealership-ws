@@ -5,6 +5,7 @@ import java.util.*;
 
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     Vehicle findVehicleByVehicleIdentifier_VehicleId(String vehicleId);
+    Vehicle findByInventoryIdentifier_InventoryIdAndVehicleIdentifier_VehicleId(String inventoryId, String vehicleId);
     List<Vehicle> findAllByInventoryIdentifier_InventoryId(String inventoryId);
 
     List<Vehicle> findAllByInventoryIdentifier_InventoryIdAndStatusEqualsAndUsageTypeEquals(String inventory, Status status, UsageType usageType);

@@ -7,6 +7,7 @@ import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Warranty
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaleResponseModel {
+public class SaleResponseModel extends RepresentationModel<SaleResponseModel> {
 
     private String saleId;
     private String inventoryId;

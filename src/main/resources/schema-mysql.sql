@@ -50,37 +50,32 @@ create table if not exists vehicle_options (
     cost DECIMAL(19,2)
 );
 
-CREATE TABLE IF NOT EXISTS vehicle_manufacturer (
-    vehicle_id INTEGER,
-    name VARCHAR(255),
-    country VARCHAR(255)
-    );
-
-CREATE TABLE IF NOT EXISTS vehicle (
+DROP TABLE IF EXISTS vehicles;
+create table if not exists vehicles (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    vehicle_id VARCHAR(36),
-    make VARCHAR(255),
-    model VARCHAR(255),
+    vehicle_id VARCHAR(17) UNIQUE,
+    inventory_id VARCHAR(36),
+    status VARCHAR(50),
+    type VARCHAR(50),
     year INTEGER,
-    status VARCHAR(255),
-    type VARCHAR(255),
-    amount DOUBLE(19, 2),
-    currency VARCHAR(10),
-    name VARCHAR(255),
-    price DOUBLE,
-    description VARCHAR(255),
-    inventory_id VARCHAR(36)
+    manufacturer VARCHAR(100),
+    make VARCHAR(50),
+    model VARCHAR(75),
+    body_class VARCHAR(100),
+    msrp DECIMAL(19,2),
+    cost DECIMAL(19,2),
+    total_options_cost DECIMAL(19,2)
     );
 
 create table if not exists customer_phonenumbers (
-    customer_id INTEGER,
+    customer_id VARCHAR(50),
     type VARCHAR(50),
     number VARCHAR(50)
     );
 
 create table if not exists customers (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    customer_id VARCHAR(36) UNIQUE,
+    customer_id VARCHAR(50) UNIQUE,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     email_address VARCHAR(50),
@@ -91,6 +86,7 @@ create table if not exists customers (
     postal_code VARCHAR (9)
     );
 
+DROP TABLE IF EXISTS sales;
 create table if not exists sales (
     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     sale_id VARCHAR(36) UNIQUE,
