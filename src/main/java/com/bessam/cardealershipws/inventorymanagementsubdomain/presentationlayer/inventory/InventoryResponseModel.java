@@ -4,16 +4,13 @@ import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.i
 
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.Vehicle;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 
-@Data
-@Builder
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class InventoryResponseModel extends RepresentationModel<InventoryResponseModel> {
@@ -21,6 +18,5 @@ public class InventoryResponseModel extends RepresentationModel<InventoryRespons
     private String inventoryId;
 
     private InventoryType type;
-
 
 }

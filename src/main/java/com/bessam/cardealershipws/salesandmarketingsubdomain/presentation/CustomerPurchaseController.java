@@ -33,4 +33,9 @@ public class CustomerPurchaseController {
     public ResponseEntity<SaleResponseModel> createCustomerPurchase(@PathVariable String customerId, @RequestBody SaleRequestModel saleRequestModel) {
         return ResponseEntity.status(HttpStatus.CREATED).body(saleService.addCustomerPurchase(customerId, saleRequestModel));
     }
+
+    @PutMapping(value = "{saleId}", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<SaleResponseModel> updateCustomerPurchase(@PathVariable String customerId, @PathVariable String saleId, @RequestBody SaleRequestModel saleRequestModel) {
+        return ResponseEntity.ok().body(saleService.updateSale(saleRequestModel, saleId, customerId));
+    }
 }

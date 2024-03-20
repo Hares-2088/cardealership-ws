@@ -10,6 +10,7 @@ public interface SaleService {
     List<SaleResponseModel> getAllPurchases(String customerId);
     SaleResponseModel getCustomerPurchaseBySaleId(String customerId, String saleId);
     SaleResponseModel addCustomerPurchase(String customerId, SaleRequestModel saleRequestModel);
-    void deleteSale(String saleId, String inventoryId, String vehicleId, String customerId,String employeeId);
-    SaleResponseModel updateSale(SaleRequestModel saleRequestModel, String saleId);
+    SaleResponseModel updateSale(SaleRequestModel saleRequestModel, String saleId, String customerId);
+
+    void deleteSale(String saleId, String customerId);
 }

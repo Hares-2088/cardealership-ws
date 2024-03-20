@@ -9,10 +9,7 @@ import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.i
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.Status;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.Vehicle;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.VehicleRepository;
-import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Price;
-import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Sale;
-import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.SaleIdentifier;
-import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.SaleRepository;
+import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.*;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.mapper.SaleRequestMapper;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.mapper.SaleResponseMapper;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.presentation.SaleRequestModel;
@@ -132,7 +129,7 @@ public class SaleServiceImpl implements  SaleService{
 
         //convert request model to entity
         Sale sale = saleRequestMapper.requestModelToEntity(saleRequestModel, new SaleIdentifier(), customer.getCustomerIdentifier(), employee.getEmployeeIdentifier(), inventory.getInventoryIdentifier(), vehicle.getVehicleIdentifier(),
-                new Price(saleRequestModel.getSalePrice(),saleRequestModel.getCurrency()));
+                new Price(saleRequestModel.getSalePrice(),saleRequestModel.getCurrency()), saleRequestModel.getFinancingAgreementDetails());
 
         //save sale
         Sale savedSale = saleRepository.save(sale);
@@ -140,12 +137,46 @@ public class SaleServiceImpl implements  SaleService{
     }
 
     @Override
-    public void deleteSale(String saleId, String inventoryId, String vehicleId, String customerId, String employeeId) {
+    public SaleResponseModel updateSale(SaleRequestModel saleRequestModel, String saleId, String customerId) {
 
+        Sale sale = saleRepository.findSaleByCustomerIdentifier_CustomerIdAndSaleIdentifier_SaleId(customerId, saleId);
+
+        if (sale == null) {
+            throw new NotFoundException("Sale not found");
+        }
+        //verify employee exists
+        Employee employee = employeeRepository.findEmployeeByEmployeeIdentifier_EmployeeId(saleRequestModel.getEmployeeId());
+        if (employee == null) {
+            throw new InvalidInputException("Employee not found");
+        }
+        //verify that vehicle is in inventory
+        Vehicle vehicle = vehicleRepository.findByInventoryIdentifier_InventoryIdAndVehicleIdentifier_VehicleId(saleRequestModel.getInventoryId(), saleRequestModel.getVehicleId());
+        if (vehicle == null) {
+            throw new InvalidInputException("Vehicle not found in the inventory" + saleRequestModel.getInventoryId());
+        }
+        //verify that vehicle is not sold
+        if (vehicle.getStatus() != Status.Available) {
+            throw new InvalidInputException("Vehicle already sold");
+        }
+        //get inventory
+        Inventory inventory = inventoryRepository.findInventoryByInventoryIdentifier_InventoryId(saleRequestModel.getInventoryId());
+        //convert request model to entity
+        Sale updatedSale = saleRequestMapper.requestModelToEntity(saleRequestModel, sale.getSaleIdentifier(), sale.getCustomerIdentifier(), employee.getEmployeeIdentifier(), inventory.getInventoryIdentifier(), vehicle.getVehicleIdentifier(),
+                new Price(saleRequestModel.getSalePrice(),saleRequestModel.getCurrency()), saleRequestModel.getFinancingAgreementDetails());
+
+        updatedSale.setId(sale.getId());
+
+
+        return saleResponseMapper.entityToResponseModel(saleRepository.save(updatedSale), customerRepository.findByCustomerIdentifier_CustomerId(customerId), employee, vehicle);
     }
 
     @Override
-    public SaleResponseModel updateSale(SaleRequestModel saleRequestModel, String saleId) {
-        return null;
+    public void deleteSale(String saleId, String customerId) {
+        Sale sale = saleRepository.findSaleByCustomerIdentifier_CustomerIdAndSaleIdentifier_SaleId(customerId, saleId);
+        if (sale == null) {
+            throw new NotFoundException("Sale not found");
+        }
+        saleRepository.delete(sale);
     }
+
 }

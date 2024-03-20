@@ -18,6 +18,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public interface VehicleResponseMapper {
 
     @Mapping(expression = "java(vehicle.getVehicleIdentifier().getVehicleId())", target = "vehicleId")
+    @Mapping(expression = "java(vehicle.getInventoryIdentifier().getInventoryId())", target = "inventoryId")
+    @Mapping(expression = "java(vehicle.getPrice().getCurrency().toString())", target = "currency")
+    @Mapping(expression = "java(vehicle.getPrice().getPrice())", target = "price")
     VehicleResponseModel entityToResponseModel(Vehicle vehicle);
 
     List<VehicleResponseModel> entityListToResponseModelList(List<Vehicle> vehicles);

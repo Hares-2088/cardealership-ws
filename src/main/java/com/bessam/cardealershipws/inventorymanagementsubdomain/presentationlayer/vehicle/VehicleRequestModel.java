@@ -1,22 +1,17 @@
 package com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.vehicle;
 
-import com.bessam.cardealershipws.common.InventoryIdentifier;
-import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.MSRP;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.Manufacturer;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.Options;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class VehicleRequestModel {
     private List<Manufacturer> manufacturers;
-    private MSRP msrp;
-    private Options options;
+    private List<Options> options;
     private String make;
     private String model;
     private Integer year;

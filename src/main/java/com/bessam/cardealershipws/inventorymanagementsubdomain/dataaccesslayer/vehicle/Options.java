@@ -10,18 +10,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class Options {
-    @Column(name = "name")
-    private String name;
+    private String optionName;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "price")
-    private Double price;
+    private Double optionPrice;
 
     public Options(String name, String description, Double price) {
-        this.name = name;
+        this.optionName = name;
         this.description = description;
-        this.price = price;
+        this.optionPrice = price;
     }
 }

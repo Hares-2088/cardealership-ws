@@ -29,11 +29,9 @@ public class Vehicle {
     private InventoryIdentifier inventoryIdentifier;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="status")
     private Status status;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="type")
     private UsageType usageType;
 
 
@@ -42,22 +40,18 @@ public class Vehicle {
     private List<Manufacturer> manufacturers;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name="vehicle_options", joinColumns = @JoinColumn(name = "vehicle_id"))
+    @CollectionTable(name="vehicles_options", joinColumns = @JoinColumn(name = "vehicle_id"))
     private List<Options> options;
 
-    @Column(name="make")
     private String make;
 
-    @Column(name="model")
     private String model;
 
-    @Column(name="year")
     private Integer year;
 
-    @Embedded
-    private MSRP msrp;
+    private Price price;
 
-    public Vehicle(InventoryIdentifier inventoryIdentifier, @NotNull List<Manufacturer> manufacturers, @NotNull  MSRP msrp, @NotNull  List<Options> options, @NotNull  String make, @NotNull  String model, @NotNull  Integer year, @NotNull  Status status, @NotNull  UsageType type) {
+    public Vehicle(InventoryIdentifier inventoryIdentifier, @NotNull List<Manufacturer> manufacturers, @NotNull  List<Options> options, @NotNull  String make, @NotNull  String model, @NotNull  Integer year, @NotNull  Status status, @NotNull  UsageType type) {
         if (inventoryIdentifier == null) {
             throw new IllegalArgumentException("InventoryIdentifier must not be null");
         }
@@ -65,7 +59,6 @@ public class Vehicle {
         this.inventoryIdentifier = inventoryIdentifier;
         this.vehicleIdentifier = new VehicleIdentifier();
         this.manufacturers = manufacturers;
-        this.msrp = msrp;
         this.options = options;
         this.make = make;
         this.model = model;

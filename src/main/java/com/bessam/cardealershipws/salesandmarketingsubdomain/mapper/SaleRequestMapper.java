@@ -4,6 +4,7 @@ import com.bessam.cardealershipws.common.CustomerIdentifier;
 import com.bessam.cardealershipws.common.EmployeeIdentifier;
 import com.bessam.cardealershipws.common.InventoryIdentifier;
 import com.bessam.cardealershipws.common.VehicleIdentifier;
+import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.FinancingAgreementDetails;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Price;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Sale;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.SaleIdentifier;
@@ -19,5 +20,5 @@ public interface SaleRequestMapper {
     Sale requestModelToEntity(SaleRequestModel saleRequestModel, SaleIdentifier saleIdentifier,
                               CustomerIdentifier customerIdentifier, EmployeeIdentifier employeeIdentifier,
                               InventoryIdentifier inventoryIdentifier, VehicleIdentifier vehicleIdentifier,
-                              Price price);
+                              Price price, FinancingAgreementDetails financingAgreementDetails);
 }

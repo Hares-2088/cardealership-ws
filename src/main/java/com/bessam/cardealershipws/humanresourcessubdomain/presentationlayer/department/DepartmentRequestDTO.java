@@ -1,15 +1,12 @@
 package com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.department;
 
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.department.Position;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
 public class DepartmentRequestDTO{
 

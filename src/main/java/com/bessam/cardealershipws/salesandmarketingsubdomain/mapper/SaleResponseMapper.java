@@ -2,9 +2,7 @@ package com.bessam.cardealershipws.salesandmarketingsubdomain.mapper;
 
 import com.bessam.cardealershipws.customerrelationssubdomain.datalayer.Customer;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.Employee;
-import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.inventory.Inventory;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.dataaccesslayer.vehicle.Vehicle;
-import com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.inventory.InventoryController;
 import com.bessam.cardealershipws.inventorymanagementsubdomain.presentationlayer.vehicle.VehicleController;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.dataaccess.Sale;
 import com.bessam.cardealershipws.salesandmarketingsubdomain.presentation.CustomerPurchaseController;

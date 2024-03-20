@@ -2,18 +2,16 @@ package com.bessam.cardealershipws.humanresourcessubdomain.presentationlayer.emp
 
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.Address;
 import com.bessam.cardealershipws.humanresourcessubdomain.dataaccesslayer.employee.PhoneNumber;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeResponseDTO {
+public class EmployeeResponseDTO extends RepresentationModel<EmployeeResponseDTO> {
 
     private String employeeId;
     private Address address;

@@ -78,6 +78,10 @@ public class VehicleServiceImpl implements VehicleService{
         Vehicle foundVehicle = vehicleRepository.findVehicleByVehicleIdentifier_VehicleId(vehicleId);
 
         Vehicle vehicle = vehicleRequestMapper.requestModelToEntity(vehicleRequestModel, foundVehicle.getVehicleIdentifier());
+        vehicle.setId(foundVehicle.getId());
+        vehicle.setInventoryIdentifier(foundVehicle.getInventoryIdentifier());
+        vehicle.setPrice(foundVehicle.getPrice());
+
         return vehicleResponseMapper.entityToResponseModel(vehicleRepository.save(vehicle));
     }
 

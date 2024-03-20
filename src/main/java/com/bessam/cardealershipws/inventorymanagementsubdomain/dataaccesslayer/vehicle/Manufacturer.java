@@ -11,10 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Manufacturer {
 
-    @Column(name="name")
     private String name;
 
-    @Column(name="country")
     private String country;
 
     public Manufacturer(String name, String country) {
